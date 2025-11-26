@@ -3,7 +3,7 @@
  */
 export async function up(knex) {
   return knex.schema.createTable('users', (table) => {
-    table.integer('auth_id').primary()
+    table.string('auth_id').primary()
     table.string('name').notNullable()
     table.string('bio')
     table.string('font')
