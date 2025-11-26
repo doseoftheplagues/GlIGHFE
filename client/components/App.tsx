@@ -1,7 +1,7 @@
-import { useFruits } from '../hooks/useFruits.ts'
+// import { useFruits } from '../hooks/useFruits.ts'
 
 function App() {
-  const { data } = useFruits()
+  // const { data } = useFruits()
 
   return (
     <>
@@ -9,7 +9,7 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Fullstack Boilerplate - with Fruits!
         </h1>
-        <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
+        {/* <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul> */}
       </div>
     </>
   )
