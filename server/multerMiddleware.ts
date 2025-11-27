@@ -3,6 +3,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
 import dotenv from 'dotenv'
 import multer from 'multer'
+import path from 'node:path'
 
 dotenv.config()
 
@@ -25,10 +26,7 @@ const storage = new CloudinaryStorage({
       const originalFileName = file.originalname
 
       // 2. Remove the file extension (e.g. "my_photo")
-      const nameWithoutExtension = originalFileName
-        .split('.')
-        .slice(0, -1) // -1 starts from the end of the array
-        .join('.')
+      const nameWithoutExtension = path.parse(originalFileName).name
 
       // 3. Sanitize the filename to be URL-friendly: replace non-alphanumeric characters (except hyphens) with hyphens, and converts to lowercase.
       const sanitizedName = nameWithoutExtension
@@ -67,12 +65,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // limits file size to 10 MB
   fileFilter: (req, file, cb) => {
-    const allowedMimeTypes = [
-      'image/jpeg',
-      'image/png',
-      'image/webp',
-      'video/mp4',
-    ]
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp']
 
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true) // Accept file

@@ -31,7 +31,7 @@ export function PhotoUploader({ image, onImageChange }: Props) {
       <form>
         <input
           type="file"
-          accept=".jpg, .png .webp"
+          accept=".jpg, .png, .webp"
           onChange={(e) => handleChange(e)}
         ></input>
         <button type="submit" onClick={(e) => handleSubmit(e)}>
