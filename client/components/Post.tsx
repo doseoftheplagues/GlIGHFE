@@ -7,7 +7,7 @@ interface Props {
 function Post({ post }: Props) {
   return (
     <div className="mb-4 rounded-lg bg-white p-4 shadow-md">
-      <h3 className="text-lg font-bold">{post.UserName}</h3>
+      <h3 className="text-lg font-bold">{post.userName}</h3>
       {post.imageUrl && (
         <img
           src={post.imageUrl}
