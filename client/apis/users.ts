@@ -10,5 +10,4 @@ export async function getUserById(authId: string): Promise<UserData> {
 
 export async function createUser(userData: UserData): Promise<void> {
   await request.post(`${rootURL}/users`).send(userData)
-  console.log(userData)
 }

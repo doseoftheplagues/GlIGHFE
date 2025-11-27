@@ -9,6 +9,7 @@ import { UserData } from '../../models/user'
 
 function LoginPage() {
   const emptyFormState = {
+    authId: '',
     name: '',
     bio: '',
     font: '',
@@ -57,7 +58,7 @@ function LoginPage() {
     })
   }
 
-  const handleChange = (evt: any) => {
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target
     setFormState((prev) => ({
       ...prev,
@@ -101,7 +102,7 @@ function LoginPage() {
         <form onSubmit={handleSubmit}>
           <div>
             <label
-              htmlFor="Name"
+              htmlFor="name"
               className="text-heading mb-2.5 mt-4 block text-sm font-medium"
             >
               Name:
@@ -118,7 +119,7 @@ function LoginPage() {
           </div>
           <div>
             <label
-              htmlFor="Bio"
+              htmlFor="bio"
               className="text-heading mb-2.5 block text-sm font-medium"
             >
               Bio:

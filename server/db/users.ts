@@ -8,7 +8,6 @@ import { User, UserData } from '../../models/user.js'
 
 export async function getUserById(auth_id: string): Promise<User> {
   const result = await db('users').select().first().where('auth_id', auth_id)
-  console.log(result)
   return result
 }
 
