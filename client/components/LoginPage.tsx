@@ -44,7 +44,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated && userData) {
-      navigate('/layout')
+      navigate('/onboarding')
     }
   }, [userData, isAuthenticated, navigate])
 
@@ -67,7 +67,7 @@ function LoginPage() {
     evt.preventDefault()
     try {
       await createMutation.mutateAsync(formState)
-      navigate('/app')
+      navigate('/onboarding')
     } catch (error) {
       console.error('Failed to Update Profile:', error)
     }
