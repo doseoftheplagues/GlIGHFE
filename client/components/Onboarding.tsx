@@ -1,7 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function Onboarding() {
-  const Glyph: string = 'Glyph-ee' // make setState to change through different pronounciations!!!
+  const glyphArray: string[] = [
+    'Glyph-ee',
+    'Gee Life',
+    'Glig-hefe',
+    'Glyphee-ee',
+    'Gli-ephee',
+    'Gly-phae'
+  ]
+  const [ Glyph, setGlyph ] = useState(glyphArray)
+  // const Glyph: string = 'Glyph-ee' // make setState to change through different pronounciations!!!
 
   useEffect(() => {
     // Lock scrolling when component mounts
@@ -28,7 +37,7 @@ function Onboarding() {
       <br />
       <p className="rounded-xl border-2 border-black">
         GlIFGHE leverages visual communication to drive authentic user
-        engagement. zero text, zero barriers. See with eyes. Think with heart.
+        engagement. Zero text, zero barriers. See with eyes. Think with heart.
         Your journey begins.
       </p>
       <br />
@@ -44,10 +53,8 @@ function Onboarding() {
       >
         I AGREE I WILL USE NO TEXT
       </button>
-      <footer className="right-0p-4 absolute bottom-0 left-0 text-white"></footer>
+      <footer className="right-0 p-4 absolute bottom-0 left-0 text-white"></footer>
     </div>
   )
 }
 export default Onboarding
-
-// THERE SHALL BE NO WORDS OR TEXT BEYOND THIS POINT.

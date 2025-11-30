@@ -29,7 +29,7 @@ function UploadPage() {
   function handleImageChange(newImage: string) {
     setImageId(newImage)
   }
-
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
