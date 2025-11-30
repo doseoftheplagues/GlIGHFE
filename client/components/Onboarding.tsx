@@ -9,6 +9,7 @@ function Onboarding() {
     'Glyphee-ee',
     'Gli-ephee',
     'Gly-phae',
+    'Glif-phi',
   ]
   const [Glyph, setGlyph] = useState(glyphArray)
   // const Glyph: string = 'Glyph-ee' // make setState to change through different pronounciations!!!
