@@ -9,50 +9,8 @@ import EmojiPicker, { EmojiStyle, Categories } from 'emoji-picker-react'
 
 function UploadPage() {
   const [imageId, setImageId] = useState('')
-  const [charLimit, setCharLimit] = useState(10)
+  const charLimit = 30
   const [showPicker, setShowPicker] = useState(false)
-  // type CategoryConfig = {
-  //   category: Categories
-  //   name: string
-  // }
-  // const categories: CategoryConfig[] = [
-  //   {
-  //     category: 'suggested',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'smileys_people',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'animals_nature',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'food_drink',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'travel_places',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'activities',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'objects',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'symbols',
-  //     name: '',
-  //   },
-  //   {
-  //     category: 'flags',
-  //     name: '',
-  //   },
-  // ]
 
   const { user, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
