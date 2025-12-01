@@ -10,7 +10,7 @@ export async function seed(knex) {
       name: 'Sofia',
       bio: '',
       font: '',
-      profile_picture: '',
+      profile_picture: 'kitten',
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ export async function seed(knex) {
       name: 'Nikola',
       bio: '',
       font: '',
-      profile_picture: '',
+      profile_picture: 'uploads/kittenturtle-1764290190072',
     },
     {
       id: 3,
@@ -28,7 +28,14 @@ export async function seed(knex) {
       font: '',
       profile_picture: '',
     },
-    { id: 4, auth_id: 4, name: 'Matt', bio: '', font: '', profile_picture: '' },
+    {
+      id: 4,
+      auth_id: 4,
+      name: 'Matt',
+      bio: '',
+      font: '',
+      profile_picture: 'uploads/kittenburger-1764290785759',
+    },
     {
       id: 5,
       auth_id: 5,

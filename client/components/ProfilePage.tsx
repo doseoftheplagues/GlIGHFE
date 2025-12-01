@@ -92,13 +92,14 @@ function ProfilePage() {
     <div className="container mx-auto p-4">
       {/* Profile Header */}
       <div className="mb-6 flex items-center space-x-4 rounded-lg bg-gray-800 p-4 shadow-md">
-        <div className="mb-6 flex h-48 w-48 items-center space-x-4 overflow-hidden rounded-[100%] bg-gray-900 p-4 shadow-md">
+        <div className=" mb-6 flex h-48 w-48 items-center space-x-4 overflow-hidden rounded-full bg-gray-900 p-2 shadow-md">
           {userProfile.profile_picture && (
             <Image
+              className="rounded-full"
               cloudName="dfjgv0mp6"
               publicId={userProfile.profile_picture}
-              width="192"
-              height="192"
+              width="300"
+              height="300"
               crop="fill"
             />
           )}

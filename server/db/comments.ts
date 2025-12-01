@@ -11,7 +11,6 @@ export async function getAllComments() {
 }
 
 export async function getCommentsByPostId(postId: number) {
-  const comments = await db('comments')
   const matchingComments = await db('comments')
     .join('users', 'comments.user_id', 'users.auth_id')
     .where('comments.post_id', postId)
@@ -25,8 +24,6 @@ export async function getCommentsByPostId(postId: number) {
       'users.name as userName',
       'users.profile_picture as profilePicture',
     )
-  console.log(matchingComments)
-  console.log(comments)
   return matchingComments
 }
 

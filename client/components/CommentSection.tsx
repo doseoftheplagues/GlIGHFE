@@ -1,5 +1,5 @@
 import Comment from './Comment'
-import { Comment as CommentType, CommentData } from '../../models/comment'
+import { CommentData, CommentWithAuthor } from '../../models/comment'
 import { useComments } from '../hooks/useComments'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useEffect, useState } from 'react'
@@ -7,6 +7,12 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { addComment } from '../apis/comments'
+import EmojiPicker, {
+  Categories,
+  EmojiClickData,
+  EmojiStyle,
+} from 'emoji-picker-react'
+import GraphemeSplitter from 'grapheme-splitter'
 
 interface Props {
   postId: number
@@ -16,6 +22,9 @@ export function CommentSection({ postId }: Props) {
   const { data: comments, isPending, isError } = useComments(postId)
   const [commentsOpen, setCommentsOpen] = useState(false)
   const { user, isAuthenticated } = useAuth0()
+  const splitter = new GraphemeSplitter()
+  const charLimit = 30
+  const [showPicker, setShowPicker] = useState(false)
   const authId = user?.sub
   const [formData, setFormData] = useState({
     font: '',
@@ -73,6 +82,19 @@ export function CommentSection({ postId }: Props) {
     setFormData({ ...formData, message: e.target.value })
   }
 
+  const onEmojiClick = (emojiObject: EmojiClickData) => {
+    setFormData((previousData) =>
+      splitter.countGraphemes(
+        String(previousData.message + emojiObject.emoji),
+      ) <= charLimit
+        ? {
+            ...previousData,
+            message: previousData.message + emojiObject.emoji,
+          }
+        : previousData,
+    )
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -105,25 +127,58 @@ export function CommentSection({ postId }: Props) {
               </button>
             </Collapsible.CollapsibleTrigger>
             <Collapsible.Content>
+              {comments.map((comment: CommentWithAuthor) => (
+                <Comment key={comment.id} commentData={comment} />
+              ))}
               <div className="mb-5 mt-2">
                 <form onSubmit={handleSubmit}>
-                  <div className="flex flex-row">
+                  <div className="mb-4 ml-20 mt-6 flex flex-row">
                     <input
                       type="text"
                       className=" w-full rounded-lg border border-[#c7ef9f] p-2 focus:outline-[#97d558]"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Add a comment..."
+                      placeholder=""
+                      maxLength={charLimit}
                     ></input>
+                    <button
+                      className="pl-4 text-2xl"
+                      type="button"
+                      onClick={() => setShowPicker((val) => !val)}
+                    >
+                      😀
+                    </button>
                     <button type="submit">
                       <i className="bi bi-send relative top-0.5 ml-2 mr-2 text-xl"></i>
                     </button>
                   </div>
                 </form>
+                {showPicker && (
+                  <EmojiPicker
+                    categories={[
+                      { category: 'suggested' as Categories, name: '' },
+                      { category: 'smileys_people' as Categories, name: '' },
+                      { category: 'animals_nature' as Categories, name: '' },
+                      { category: 'food_drink' as Categories, name: '' },
+                      { category: 'travel_places' as Categories, name: '' },
+                      { category: 'activities' as Categories, name: '' },
+                      { category: 'objects' as Categories, name: '' },
+                      { category: 'symbols' as Categories, name: '' },
+                      { category: 'flags' as Categories, name: '' },
+                    ]}
+                    previewConfig={{
+                      defaultEmoji: '1f60a',
+                      defaultCaption: '',
+                      showPreview: false,
+                    }}
+                    className=""
+                    width="full"
+                    onEmojiClick={onEmojiClick}
+                    emojiStyle={EmojiStyle.NATIVE}
+                    searchPlaceHolder=""
+                  />
+                )}
               </div>
-              {comments.map((comment: CommentType) => (
-                <Comment key={comment.id} commentData={comment} />
-              ))}
             </Collapsible.Content>
           </Collapsible.Root>
         </div>
