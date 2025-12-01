@@ -17,7 +17,8 @@ function Onboarding() {
     'Gellig-huiffer',
     'Jelly-geef',
   ]
-  const currentGlyph = () => glyphArray[random(0, glyphArray.length - 1)]
+  const Glyph = glyphArray
+  const currentGlyph = Glyph[random(0, Glyph.length - 1)]
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
