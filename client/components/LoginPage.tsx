@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 import { UserData } from '../../models/user'
+import Loading from './Loading'
 // import { PhotoUploader } from './PhotoUploader'
 
 function LoginPage() {
