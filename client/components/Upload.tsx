@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router'
 import Loading from './Loading'
 import { PostData } from '../../models/post'
 import { useAddPost } from '../hooks/usePosts'
-import EmojiPicker, { EmojiStyle, Categories } from 'emoji-picker-react'
+import EmojiPicker, {
+  EmojiStyle,
+  Categories,
+  EmojiClickData,
+} from 'emoji-picker-react'
 
 function UploadPage() {
   const [imageId, setImageId] = useState('')
@@ -39,7 +43,7 @@ function UploadPage() {
     }))
   }
 
-  const onEmojiClick = (emojiObject: { emoji: string }) => {
+  const onEmojiClick = (emojiObject: EmojiClickData) => {
     setFormData((previousData) => ({
       ...previousData,
       message: previousData.message + emojiObject.emoji,
