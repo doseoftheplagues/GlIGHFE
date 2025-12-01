@@ -2,7 +2,7 @@ import { Outlet } from 'react-router'
 import Navbar from './Navbar'
 
 export default function Layout() {
-  const wingdings = true
+  const wingdings = false
   return (
     <div className={wingdings ? "font-['wingdings']" : 'font-sans'}>
       <header className="flex flex-col items-center">

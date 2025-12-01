@@ -110,6 +110,7 @@ function UploadPage() {
                     maxLength={charLimit}
                     onChange={handleChange}
                     value={formData.message}
+                    max={charLimit}
                   ></input>
                   {showPicker && (
                     <EmojiPicker
