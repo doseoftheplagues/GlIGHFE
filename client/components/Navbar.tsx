@@ -21,7 +21,7 @@ function Navbar() {
   // ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 flex items-center justify-around bg-gray-800 p-4 text-white shadow-lg">
+    <nav className="fixed bottom-0 left-0 right-0 z-10 flex items-center justify-around bg-gray-800 p-4 text-white shadow-lg">
       <Link
         to="/feed"
         className="flex flex-col items-center rounded-md p-2 transition-colors duration-200 hover:bg-gray-700"

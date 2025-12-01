@@ -43,7 +43,7 @@ function Post({ post }: Props) {
           </button>
         </div>
       ) : (
-        <h3 className="text-lg font-bold">{post.userName}</h3>
+        <h3 className="text-2xl font-bold">{post.userName}</h3>
       )}
 
       {post.imageUrl && (
@@ -55,7 +55,7 @@ function Post({ post }: Props) {
           crop="limit"
         />
       )}
-      <p className="mt-2 text-gray-800">{post.message}</p>
+      <p className="mt-2 text-4xl text-gray-800">{post.message}</p>
       {/* <p className="mt-1 text-sm text-gray-500">
         {new Date(post.dateAdded).toLocaleString('en-NZ', options)}
       </p> */}
