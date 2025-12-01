@@ -85,12 +85,12 @@ export async function getUserPosts(
       'users.name as userName',
       'posts.message',
       'posts.image as imageUrl',
-      'posts.date_added as dateAdded', // A* Fetch the date as a string
+      'posts.date_added as dateAdded',
     )
     .where('users.auth_id', authId)
     .orderBy('posts.date_added', 'desc')
 
-  return postsFromDb as Post[] // Removed the map and added type assertion
+  return postsFromDb as Post[]
 }
 
 // Get followers of User
@@ -117,4 +117,29 @@ export async function getFollowing(
     .where('followers.follower_id', authId)
     .select('users.auth_id', 'users.id', 'users.name', 'users.profile_picture')
   return following
+}
+
+// Follow another user
+export async function addFollow(
+  followerId: string,
+  followingId: string,
+  testDb?: Knex,
+): Promise<number> {
+  const connection = testDb || db
+  return connection('followers').insert({
+    follower_id: followerId,
+    following_id: followingId,
+  })
+}
+
+// Stop following another user
+export async function removeFollow(
+  followerId: string,
+  followingId: string,
+  testDb?: Knex,
+): Promise<number> {
+  const connection = testDb || db
+  return connection('followers')
+    .where({ follower_id: followerId, following_id: followingId })
+    .del()
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-// import checkJwt, { JwtRequest } from '../auth0.ts'
+import checkJwt, { JwtRequest } from '../auth0.ts'
 import { StatusCodes } from 'http-status-codes'
 import {
   addUser,
@@ -9,6 +9,8 @@ import {
   getFollowing,
   editUser,
   editUserProfilePicture,
+  addFollow,
+  removeFollow,
 } from '../db/users.js'
 import { UserData } from '../../models/user.js'
 
@@ -126,5 +128,54 @@ router.get('/:id/following', async (req, res, next) => {
 //     }
 //   }
 // })
+
+// POST /api/v1/users/:id/follow - Add a follower
+router.post('/:id/follow', checkJwt, async (req: JwtRequest, res, next) => {
+  try {
+    const followingId = req.params.id
+    const followerId = req.auth?.sub
+
+    if (!followerId) {
+      return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized')
+    }
+
+    // Prevent a user from following themselves
+    if (followerId === followingId) {
+      return res.status(StatusCodes.BAD_REQUEST).send('Cannot follow yourself')
+    }
+
+    const result = await addFollow(followerId, followingId)
+    // Knex insert for SQLite returns an array with the rowid of the inserted row
+    if (result && result.length > 0) {
+      res.sendStatus(StatusCodes.CREATED)
+    } else {
+      res.status(StatusCodes.CONFLICT).send('Already following this user')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// DELETE /api/v1/users/:id/follow - Remove a follower
+router.delete('/:id/follow', checkJwt, async (req: JwtRequest, res, next) => {
+  try {
+    const followingId = req.params.id
+    const followerId = req.auth?.sub
+
+    if (!followerId) {
+      return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized')
+    }
+
+    const result = await removeFollow(followerId, followingId)
+    // Knex delete returns the number of affected rows
+    if (result > 0) {
+      res.sendStatus(StatusCodes.OK)
+    } else {
+      res.status(StatusCodes.NOT_FOUND).send('Follow relationship not found')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
 export default router

@@ -49,3 +49,21 @@ export async function fetchFollowing(authId: string): Promise<User[]> {
   const response = await request.get(`${rootURL}/users/${authId}/following`)
   return response.body
 }
+
+export async function followUser(
+  authIdToFollow: string,
+  token: string,
+): Promise<void> {
+  await request
+    .post(`${rootURL}/users/${authIdToFollow}/follow`)
+    .set('Authorization', `Bearer ${token}`)
+}
+
+export async function unfollowUser(
+  authIdToUnfollow: string,
+  token: string,
+): Promise<void> {
+  await request
+    .delete(`${rootURL}/users/${authIdToUnfollow}/follow`)
+    .set('Authorization', `Bearer ${token}`)
+}
