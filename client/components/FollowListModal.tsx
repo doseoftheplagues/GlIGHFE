@@ -48,16 +48,6 @@ const FollowListModal: React.FC<FollowListModalProps> = ({
     }
   }, [isOpen, onClose])
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
-
   if (!isOpen) return null
 
   return (
