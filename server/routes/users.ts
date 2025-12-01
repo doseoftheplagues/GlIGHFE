@@ -1,4 +1,5 @@
 import { Router } from 'express'
+// import db from '../db/connection'
 // import checkJwt, { JwtRequest } from '../auth0.ts'
 import { StatusCodes } from 'http-status-codes'
 import {

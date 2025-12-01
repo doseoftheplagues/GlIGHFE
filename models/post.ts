@@ -7,6 +7,11 @@ export interface Post {
   dateAdded: string
 }
 
+export interface PostWithAuthor extends Post {
+  userName: string
+  profilePicture: string
+}
+
 export interface PostData {
   userId: string
   imageUrl: string

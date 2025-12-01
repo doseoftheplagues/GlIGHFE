@@ -17,6 +17,22 @@ export async function getAllPosts(db = connection): Promise<Post[]> {
   return posts
 }
 
+export async function getAllPostsWithAuthor(db = connection): Promise<Post[]> {
+  const posts = await db('posts')
+    .join('users', 'posts.user_id', 'users.auth_id')
+    .select(
+      'posts.id as id',
+      'posts.user_id as userId',
+      'users.name as userName',
+      'posts.image as imageUrl',
+      'posts.message',
+      'posts.date_added as dateAdded',
+      'users.profile_picture as profilePicture',
+    )
+    .orderBy('posts.date_added', 'desc')
+  return posts
+}
+
 export async function addPost(post: PostData): Promise<Post> {
   const result = await db('posts')
     .insert({

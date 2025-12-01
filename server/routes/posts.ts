@@ -15,6 +15,16 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/withAuthor', async (req, res) => {
+  try {
+    const posts = await db.getAllPostsWithAuthor()
+    res.json({ posts })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const newPost = await db.addPost(req.body)

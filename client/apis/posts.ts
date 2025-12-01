@@ -1,4 +1,4 @@
-import { Post, PostData } from '../../models/post'
+import { Post, PostData, PostWithAuthor } from '../../models/post'
 import request from 'superagent'
 
 const rootURL = new URL(`/api/v1/posts`, document.baseURI)
@@ -10,6 +10,11 @@ export async function fetchAllPosts(): Promise<Post[]> {
   }
   const { posts } = await res.json()
   return posts
+}
+
+export async function fetchAllPostsWithAuthor(): Promise<PostWithAuthor[]> {
+  const response = await request.get(`${rootURL}/withAuthor`)
+  return response.body.posts as PostWithAuthor[]
 }
 
 export async function addPost(post: PostData): Promise<Post> {

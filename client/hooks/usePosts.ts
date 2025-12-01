@@ -1,11 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import * as API from '../apis/posts.ts'
-import { fetchAllPosts } from '../apis/posts'
+import { fetchAllPosts, fetchAllPostsWithAuthor } from '../apis/posts'
 import { PostData } from '../../models/post.ts'
 
 export function usePosts() {
   const query = useQuery({ queryKey: ['posts'], queryFn: fetchAllPosts })
+  return {
+    ...query,
+    add: useAddPost,
+    // add more post queries/mutations here if needed later
+  }
+}
+
+export function usePostsWithAuthor() {
+  const query = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchAllPostsWithAuthor,
+  })
   return {
     ...query,
     add: useAddPost,
