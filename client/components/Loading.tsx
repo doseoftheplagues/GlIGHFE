@@ -5,22 +5,15 @@ function Loading() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    // Set up the interval when the component mounts
     const intervalId: number = window.setInterval(() => {
-      setCount((prevCount) => prevCount + 1)
-    }, 500) // Update every 1000 milliseconds (1 second)
-
-    // Clean up the interval when the component unmounts
+      setCount((prevCount) =>
+        prevCount >= loadingMessage.length ? 0 : prevCount + 1,
+      )
+    }, 500)
     return () => {
       window.clearInterval(intervalId)
     }
-  }, []) // Empty dependency array ensures this effect runs only once on mount
-
-  useEffect(() => {
-    if (count > loadingMessage.length) {
-      setCount(0)
-    }
-  }, [count])
+  }, [])
 
   return <p data-testid="loading-indicator">{loadingMessage.slice(0, count)}</p>
 }

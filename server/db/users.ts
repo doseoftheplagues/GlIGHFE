@@ -34,11 +34,9 @@ export async function editUser(user: User) {
   const result = await db('users')
     .where('auth_id', user.auth_id)
     .update({
-      id: user.id,
       name: user.name,
       bio: user.bio,
       profile_picture: user.profile_picture,
-      auth_id: user.auth_id,
       font: user.font,
     })
     .returning('*')

@@ -18,7 +18,7 @@ export async function createUser(userData: UserData): Promise<void> {
 }
 
 export async function editUser(user: User): Promise<string> {
-  const response = await request.post(`${rootURL}/users`).send(user)
+  const response = await request.put(`${rootURL}/users`).send(user)
   return response.body
 }
 

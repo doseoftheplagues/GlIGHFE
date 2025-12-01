@@ -22,8 +22,14 @@ function Post({ post }: Props) {
   //   hour12: false, // Use 24-hour format
   // }
   function handleProfileClick() {
-    mutate({ authId: post.userId, profilePicture: post.imageUrl })
-    navigate(`/profile/${user?.sub}`)
+    mutate(
+      { authId: post.userId, profilePicture: post.imageUrl },
+      {
+        onSuccess: () => {
+          navigate(`/profile/${user?.sub}`)
+        },
+      },
+    )
   }
 
   return (

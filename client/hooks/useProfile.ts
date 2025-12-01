@@ -15,7 +15,7 @@ export function useUserProfile(authId: string) {
   })
   return {
     ...query,
-    editProfilePic: useEditUserProfilePicture,
+    // editProfilePic: useEditUserProfilePicture,
     // add more user queries/mutations here if needed later
   }
 }
