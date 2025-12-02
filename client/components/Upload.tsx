@@ -34,7 +34,7 @@ function UploadPage() {
   function handleImageChange(newImage: string) {
     setImageId(newImage)
   }
-  
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -105,7 +105,7 @@ function UploadPage() {
           <br />
           {imageId && (
             <div className="flex-col gap-4">
-              <div className="flex flex-row items-start justify-between">
+              <div className="flex flex-row items-start justify-between pl-2 pr-2">
                 <label className="collapse" htmlFor="caption">
                   Caption
                 </label>
