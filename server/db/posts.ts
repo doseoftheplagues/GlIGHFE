@@ -33,7 +33,7 @@ export async function getAllPostsWithAuthor(db = connection): Promise<Post[]> {
   return posts
 }
 
-export async function getPostbyIdWithAuthor(id: number): Promise<Post> {
+export async function getPostbyIdWithAuthor(id: number): Promise<Post | undefined> {
   const post = await db('posts')
     .join('users', 'posts.user_id', 'users.auth_id')
     .select(
