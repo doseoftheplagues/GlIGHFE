@@ -39,22 +39,20 @@ function Post({ post }: Props) {
   }
 
   return (
-    <div className="mb-4 flex max-w-[100rem] flex-col items-center rounded-lg bg-white p-4 shadow-md">
-      <div className="flex w-full justify-between pb-4">
-        <div className="flex h-16 w-16 items-center justify-center space-x-4 overflow-hidden rounded-full bg-gray-900 p-1 shadow-md">
+    <div className="mb-4 flex max-w-[100rem] flex-col items-center rounded-lg border-2 border-[#9dc5744d] bg-white p-2 shadow-md">
+      <div className="flex w-full items-center justify-start pb-2">
+        <div className="flex h-14 max-h-14 w-14 max-w-14 items-center justify-center overflow-hidden rounded-full  p-1 shadow-sm">
           <button onClick={handlePictureClick}>
             <Image
-              className="rounded-full"
+              className="h-14 max-h-14 w-14 max-w-14 rounded-full border-2 border-[#9cc574]"
               cloudName="dfjgv0mp6"
               publicId={post.profilePicture}
               alt={post.userName + "'s profile"}
-              width="300"
-              height="300"
               crop="fill"
             />
           </button>
         </div>
-        <h3 className="text-4xl font-bold">{post.userName}</h3>
+        <h3 className="ml-2 text-base font-bold">{post.userName}</h3>
         {post.userId === user?.sub ? (
           <button onClick={handleProfileClick} className="text-right">
             <i className="bi bi-person-circle text-3xl"></i>
@@ -63,6 +61,7 @@ function Post({ post }: Props) {
           <div></div>
         )}
       </div>
+      <hr className="w-full rounded-full border border-[#cbe4b298]" />
       <PostLink id={post.id}>
         {post.imageUrl && (
           <Image
@@ -76,9 +75,6 @@ function Post({ post }: Props) {
       </PostLink>
       <p className="mt-2 text-4xl text-gray-800">{post.message}</p>
       <CommentSection postId={post.id} />
-      {/* <p className="mt-1 text-sm text-gray-500">
-        {new Date(post.dateAdded).toLocaleString('en-NZ', options)}
-      </p> */}
     </div>
   )
 }
