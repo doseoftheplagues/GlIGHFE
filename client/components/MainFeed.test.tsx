@@ -4,16 +4,16 @@
 
 import '../tests/setup.ts'
 import '@testing-library/jest-dom/vitest'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import MainFeed from './MainFeed'
-import { usePosts } from '../hooks/usePosts'
-import { Post } from '../../models/post'
+import { usePostsWithAuthor } from '../hooks/usePosts'
+import { PostWithAuthor } from '../../models/post'
 
-// Mock all necessary hooks
+// Mock hooks
 vi.mock('../hooks/usePosts')
 vi.mock('../hooks/useProfile', () => ({
   useEditUserProfilePicture: vi.fn(() => ({ mutate: vi.fn() })),
@@ -23,20 +23,29 @@ vi.mock('react-router', async (importOriginal) => {
   return { ...actual, useNavigate: vi.fn() }
 })
 
-// Helper to render components with required providers
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false } },
+})
+
 const renderWithProviders = (ui: React.ReactElement) => {
   return render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <MemoryRouter>{ui}</MemoryRouter>
     </QueryClientProvider>,
   )
 }
 
 describe('MainFeed component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should display a loading message when posts are loading', () => {
-    vi.mocked(usePosts).mockReturnValue({
+    vi.mocked(usePostsWithAuthor).mockReturnValue({
+      data: undefined,
       isLoading: true,
-    } as ReturnType<typeof usePosts>)
+      isError: false,
+    } as never)
 
     renderWithProviders(<MainFeed />)
 
@@ -44,9 +53,11 @@ describe('MainFeed component', () => {
   })
 
   it('should display an error message when fetching posts fails', () => {
-    vi.mocked(usePosts).mockReturnValue({
+    vi.mocked(usePostsWithAuthor).mockReturnValue({
+      data: undefined,
+      isLoading: false,
       isError: true,
-    } as ReturnType<typeof usePosts>)
+    } as never)
 
     renderWithProviders(<MainFeed />)
 
@@ -54,7 +65,7 @@ describe('MainFeed component', () => {
   })
 
   it('should display a list of posts when data is successfully fetched', async () => {
-    const mockPosts: Post[] = [
+    const mockPosts: PostWithAuthor[] = [
       {
         id: 1,
         userId: '1',
@@ -62,6 +73,7 @@ describe('MainFeed component', () => {
         message: 'Post 1',
         imageUrl: '',
         dateAdded: '',
+        profilePicture: 'sofia.jpg',
       },
       {
         id: 2,
@@ -70,13 +82,15 @@ describe('MainFeed component', () => {
         message: 'Post 2',
         imageUrl: '',
         dateAdded: '',
+        profilePicture: 'nikola.jpg',
       },
     ]
 
-    vi.mocked(usePosts).mockReturnValue({
+    vi.mocked(usePostsWithAuthor).mockReturnValue({
       data: mockPosts,
-      isSuccess: true,
-    } as ReturnType<typeof usePosts>)
+      isLoading: false,
+      isError: false,
+    } as never)
 
     renderWithProviders(<MainFeed />)
 
