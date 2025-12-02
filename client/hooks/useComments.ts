@@ -44,7 +44,6 @@ export function useDeleteComment() {
   return useMutation({
     mutationFn: (comment: Comment) => API.deleteComment(comment),
     onSuccess: (_, variables) => {
-      console.log(variables.id)
       // Refresh the comments of that post
       queryClient.invalidateQueries({
         queryKey: ['comments', Number(variables.postId)],
