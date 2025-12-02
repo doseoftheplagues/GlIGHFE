@@ -6,13 +6,11 @@ interface PostLinkProps {
   onClick?: () => void
 }
 
-export const PostLink: React.FC<UserProfileLinkProps> = ({
+const PostLink: React.FC<PostLinkProps> = ({
   children,
   onClick,
   id,
 }) => {
-
-
   return (
     <Link to={`/post/${id}`} onClick={onClick}>
       {children}

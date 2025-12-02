@@ -4,6 +4,7 @@ import { Image } from 'cloudinary-react'
 import { useEditUserProfilePicture } from '../hooks/useProfile'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router'
+import PostLink from './common/PostLink'
 
 interface Props {
   post: PostWithAuthor
@@ -62,16 +63,17 @@ function Post({ post }: Props) {
           <div></div>
         )}
       </div>
-
-      {post.imageUrl && (
-        <Image
-          cloudName="dfjgv0mp6"
-          publicId={post.imageUrl}
-          // width="300"
-          height="600"
-          crop="limit"
-        />
-      )}
+      <PostLink id={post.id}>
+        {post.imageUrl && (
+          <Image
+            cloudName="dfjgv0mp6"
+            publicId={post.imageUrl}
+            // width="300"
+            height="600"
+            crop="limit"
+          />
+        )}
+      </PostLink>
       <p className="mt-2 text-4xl text-gray-800">{post.message}</p>
       <CommentSection postId={post.id} />
       {/* <p className="mt-1 text-sm text-gray-500">
