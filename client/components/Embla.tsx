@@ -9,8 +9,12 @@ type PropType = {
 }
 
 const EmblaCarousel = (props: PropType) => {
-  const { textBoxes = [], options } = props // Added default
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
+  const { textBoxes = [], options } = props
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    ...options,
+    axis: 'x',
+    dragFree: false,
+  })
   const [currentIndex, setCurrentIndex] = useState(0)
   const navigate = useNavigate()
 
@@ -31,31 +35,33 @@ const EmblaCarousel = (props: PropType) => {
   const isLastSlide = currentIndex === textBoxes.length - 1
 
   return (
-    <section className="w-full overflow-hidden">
-      <div className="w-full overflow-hidden" ref={emblaRef}>
-        <div className="flex">
-          {textBoxes.map((text) => (
+    <section className="w-full px-1 sm:px-4 md:px-6 lg:px-8">
+      <div className="min-w-0 touch-pan-y overflow-hidden" ref={emblaRef}>
+        <div className="flex touch-pan-y">
+          {textBoxes.map((text, index) => (
             <div
-              className="h-[60%] flex min-w-0 flex-[0_0_100%] items-center justify-center p-8"
-              key={text}
+              className="flex min-w-0 flex-[0_0_100%] items-center justify-center py-4 sm:py-8"
+              key={index}
             >
-              <div className="max-w-2xl text-center text-3xl">
-                <p>{text}</p>
+              <div className="w-full break-words px-3 text-center text-xs sm:px-4 sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+                <p className="leading-relaxed">{text}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-      {!isLastSlide && <p className="text-5xl">➽➽➽</p>}
+      {!isLastSlide && <p className="mt-4 text-center text-5xl">➽➽➽</p>}
       {isLastSlide && (
-        <button
-          onClick={() => {
-            navigate('/feed')
-          }}
-          className="hover:bg-success-strong focus:ring-success-medium shadow-xs text-md ml-7 box-border rounded-xl border-2 border-black bg-lime-400 p-0.5 px-4 py-2.5 font-bold leading-5 focus:outline-none focus:ring-4"
-        >
-          I AGREE I WILL USE NO TEXT
-        </button>
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => {
+              navigate('/feed')
+            }}
+            className="hover:bg-success-strong focus:ring-success-medium shadow-xs text-md rounded-xl border-2 border-black bg-lime-400 px-4 py-2.5 font-bold leading-5 focus:outline-none focus:ring-4"
+          >
+            I AGREE I WILL USE NO TEXT
+          </button>
+        </div>
       )}
     </section>
   )

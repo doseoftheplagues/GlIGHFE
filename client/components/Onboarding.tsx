@@ -28,8 +28,8 @@ function Onboarding() {
   }, [])
 
   return (
-    <div className="relative flex h-screen min-h-screen flex-col items-center overflow-hidden bg-gradient-to-b from-green-200 to-green-500 p-4 text-center font-body">
-      <h1 className="mb-5 mt-5 text-5xl font-bold underline">
+    <div className="relative flex min-h-screen flex-col items-center overflow-hidden bg-gradient-to-b from-green-200 to-green-500 p-1 text-center font-body font-bold sm:p-4">
+      <h1 className="mb-5 mt-6 px-2 text-center text-sm font-bold underline sm:px-4 sm:text-base md:text-2xl lg:text-3xl xl:text-4xl">
         What is GlIFGHE
       </h1>
 
