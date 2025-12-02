@@ -14,3 +14,9 @@ export interface UserData {
   font?: string
   profilePicture?: string
 }
+
+export interface UserWithSelection extends UserData {
+  selection: string
+  emojis: boolean
+  id: number
+}
