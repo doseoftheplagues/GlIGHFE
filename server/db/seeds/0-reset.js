@@ -2,25 +2,38 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
+
+// export async function seed(knex) {
+//   // Changed up the format of what was happening before because postgres doesnt like it
+
+//   const tables = ['likes', 'comments', 'posts', 'followers', 'users'];
+
+//   // Truncate all tables and reset their identity counters
+//   await knex.raw(`
+//     TRUNCATE TABLE
+//       ${tables.join(', ')}
+//     RESTART IDENTITY CASCADE;
+//   `);
+// }
+
+// updated in branch ‹feat/follow-unfollow-button› for testing integration with sqlite
 export async function seed(knex) {
-  // This reset script is designed for SQLite and is essential for a clean,
-  // predictable test and development environment.
-  //
-  // 1. Foreign key checks are temporarily disabled to allow for the deletion
-  //    of all table data without constraint violations.
-  //
-  // 2. The 'sqlite_sequence' table (which tracks auto-incrementing IDs)
-  //    is manually cleared to ensure that primary keys are reset to 1 after
-  //    every seed run. This is crucial for predictable and repeatable tests.
+  // Check if we're using PostgreSQL or SQLite
+  const isPostgres = knex.client.config.client === 'pg'
 
-  // Changed up the format of what was happening before because postgres doesnt like it
-  
-  const tables = ['likes', 'comments', 'posts', 'followers', 'users'];
-
-  // Truncate all tables and reset their identity counters
-  await knex.raw(`
-    TRUNCATE TABLE
-      ${tables.join(', ')}
-    RESTART IDENTITY CASCADE;
-  `);
+  if (isPostgres) {
+    // PostgreSQL: Use TRUNCATE for better performance
+    await knex.raw(`
+      TRUNCATE TABLE
+        likes, comments, posts, followers, users
+      RESTART IDENTITY CASCADE
+    `)
+  } else {
+    // SQLite: Use DELETE
+    await knex('likes').del()
+    await knex('comments').del()
+    await knex('posts').del()
+    await knex('followers').del()
+    await knex('users').del()
+  }
 }

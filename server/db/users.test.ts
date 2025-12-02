@@ -12,7 +12,73 @@ beforeAll(async () => {
 
 // Seed the database before each test
 beforeEach(async () => {
-  await testDb.seed.run()
+  // Clear tables in correct order (respecting foreign keys)
+  await testDb('followers').del()
+  await testDb('posts').del()
+  await testDb('users').del()
+
+  // Seed only the data needed for these tests
+  await testDb('users').insert([
+    {
+      id: 1,
+      auth_id: '1',
+      name: 'Sofia',
+      bio: '',
+      font: '',
+      profile_picture: 'kitten',
+    },
+    {
+      id: 2,
+      auth_id: '2',
+      name: 'Nikola',
+      bio: '',
+      font: '',
+      profile_picture: 'uploads/kittenturtle-1764290190072',
+    },
+    {
+      id: 3,
+      auth_id: '3',
+      name: 'Patrick',
+      bio: '',
+      font: '',
+      profile_picture: '',
+    },
+    {
+      id: 4,
+      auth_id: '4',
+      name: 'Matt',
+      bio: '',
+      font: '',
+      profile_picture: 'uploads/kittenburger-1764290785759',
+    },
+    {
+      id: 7,
+      auth_id: 'google-oauth2|116118796709799810524',
+      name: 'Matt v2',
+      bio: 'Just a regular Matt, enjoying the G(ood)-life.',
+      font: '',
+      profile_picture: '',
+    },
+  ])
+
+  // Seed posts (Sofia has 1 post)
+  await testDb('posts').insert([
+    {
+      id: 1,
+      user_id: '1',
+      image: '',
+      message: 'Sofia post',
+      date_added: '1678886400',
+    },
+  ])
+
+  // Seed followers
+  await testDb('followers').insert([
+    { follower_id: '2', following_id: '1' }, // Nikola follows Sofia
+    { follower_id: '3', following_id: '1' }, // Patrick follows Sofia
+    { follower_id: 'google-oauth2|116118796709799810524', following_id: '1' }, // Matt v2 follows Sofia
+    { follower_id: '2', following_id: '3' }, // Nikola follows Patrick
+  ])
 })
 
 // Close the database connection after all tests
