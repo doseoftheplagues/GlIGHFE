@@ -135,7 +135,7 @@ function LoginPage() {
   }
 
   if (isError && (error as any)?.status !== 404) {
-    return <p className="">Error loading user data</p>
+    return <p className="font-sans">Error loading user data</p>
   }
 
   return (
