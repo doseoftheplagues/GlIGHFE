@@ -16,7 +16,7 @@ function Header() {
         <img
           className="h-12"
           src="/images/GlIGHFE-Icon.png"
-          alt="Green hirogylph bird icon"
+          alt="Green hieroglyph bird icon"
         />
       </div>
 
