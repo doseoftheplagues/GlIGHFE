@@ -15,12 +15,12 @@ function Header() {
         <img
           className="h-12"
           src="/images/GlIGHFE-Icon.png"
-          alt="Green hirogylph bird icon"
+          alt="Green hieroglyph bird icon"
         />
       </div>
 
       <IfAuthenticated>
-        <button onClick={handleLogout}>
+        <button onClick={handleLogout} aria-label="Logout">
           <i className="bi bi-lock-fill text-4xl"></i>
         </button>
       </IfAuthenticated>
