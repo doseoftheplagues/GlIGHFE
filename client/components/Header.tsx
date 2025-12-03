@@ -21,7 +21,7 @@ function Header() {
       </div>
 
       <IfAuthenticated>
-        <button onClick={handleLogout}>
+        <button onClick={handleLogout} aria-label="Logout">
           <i className="bi bi-lock-fill text-4xl"></i>
         </button>
       </IfAuthenticated>
