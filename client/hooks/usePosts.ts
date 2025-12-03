@@ -4,11 +4,16 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
-import request from 'superagent'
 
 import * as API from '../apis/posts.ts'
 import { Post, PostData, PostWithAuthor } from '../../models/post.ts'
-import { fetchAllPosts, fetchPostByIdWithAuthor } from '../apis/posts'
+import {
+  fetchAllPosts,
+  fetchPostByIdWithAuthor,
+  fetchPostsWithAuthorPaginated,
+} from '../apis/posts'
+
+const POSTS_PER_PAGE = 10
 
 export function usePosts() {
   const query = useQuery({ queryKey: ['posts'], queryFn: fetchAllPosts })
@@ -23,15 +28,11 @@ export function usePostsWithAuthor() {
   return useInfiniteQuery({
     queryKey: ['postsWithAuthor'],
     queryFn: async ({ pageParam = 0 }) => {
-      const response = await request.get(
-        `/api/v1/posts/withAuthor?limit=10&offset=${pageParam}`,
-      )
-      return response.body.posts as PostWithAuthor[]
+      return fetchPostsWithAuthorPaginated(pageParam)
     },
     getNextPageParam: (lastPage, allPages) => {
-      // If we got less than 10, we're at the end
-      if (lastPage.length < 10) return undefined
-      return allPages.length * 10
+      if (lastPage.length < POSTS_PER_PAGE) return undefined
+      return allPages.length * POSTS_PER_PAGE
     },
     initialPageParam: 0,
   })
@@ -53,7 +54,7 @@ export function useAddPost() {
     mutationFn: (post: PostData) => API.addPost(post),
     onSuccess: (_, variables) => {
       // Refresh the main feed to show the new post
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ['postsWithAuthor'] })
       // Refresh the user's profile page to show their new post
       queryClient.invalidateQueries({
         queryKey: ['profilePosts', variables.userId],
@@ -68,7 +69,7 @@ export function useDeletePost() {
     mutationFn: (post: Post) => API.deletePost(post),
     onSuccess: (_, variables) => {
       // Refresh the main feed to show the new post
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ['postsWithAuthor'] })
       // Refresh the user's profile page to show their new post
       queryClient.invalidateQueries({
         queryKey: ['profilePosts', variables.userId],
