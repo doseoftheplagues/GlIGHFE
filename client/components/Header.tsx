@@ -9,9 +9,8 @@ function Header() {
   }
 
   return (
-    <header className="flex flex-row items-center justify-between bg-[#b9da97] p-3">
+    <header className="fixed left-0 right-0 top-0 z-10 flex flex-row items-center justify-between bg-[#b9da97] p-3">
       <div className="flex flex-row items-center">
-        <h1 className="text-4xl">GlIGHFE!</h1>
         <img
           className="h-12"
           src="/images/GlIGHFE-Icon.png"

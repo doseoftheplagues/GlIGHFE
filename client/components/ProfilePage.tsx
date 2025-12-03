@@ -208,7 +208,7 @@ function ProfilePage() {
   return (
     <div className="h-full">
       {/* Profile Header */}
-      <div className="mb-4 flex w-screen items-center justify-between space-x-4 bg-[#b9db97] p-2 align-middle shadow-md">
+      <div className="mb-4 flex w-screen items-center justify-between space-x-4 p-2 align-middle shadow-md">
         <div className="flex gap-3">
           {/* Profile Picture */}
           <div className="grid place-items-center">
